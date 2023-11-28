@@ -62,21 +62,7 @@ print("Data received in {} seconds".format(time.time()-now))
 # fig = plt.figure()
 # now = time.time()
 x = list(np.arange(start=startfreq, stop=endfreq, step=((endfreq-startfreq)/sampleSize)))
-# x = list(range(startfreq, endfreq, int((endfreq-startfreq)/sampleSize)))
 y = amplitudes
 plt.plot(x, y, '-b')
 # print("Data displayed in {} seconds.".format(time.time()-now))
 plt.show()
-
-# ax = fig.add_subplot(111)
-
-# ax.plot(x, y, 'b-')
-# ax.set_ylim([0, max(amplitudes)])
-# fig.canvas.draw()
-
-# while True:
-#     startfreq, endfreq, sampleSize, amplitudes = request_antenna_data(fpga)
-#     y = amplitudes
-#     ax.plot(x, y, 'b-')
-#     fig.canvas.draw()
-#     fig.canvas.flush_events()
