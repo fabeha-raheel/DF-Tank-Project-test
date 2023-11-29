@@ -59,6 +59,11 @@ finally:
     print("Connection successfully established.")
     print()
 
+plt.ion() 
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.set_facecolor('k')
+
 print("Requesting data from FPGA...")
 now = time.time()
 startfreq, endfreq, sampleSize, amplitudes = request_antenna_data(fpga)
@@ -68,6 +73,25 @@ print("Data received in {} seconds".format(time.time()-now))
 # print("Stop Freq: ", endfreq)
 # print("Sample Size: ", sampleSize)
 
+ax.set_ylim(min(amplitudes), max(amplitudes))
 bandwidth = list(np.arange(start=startfreq, stop=endfreq, step=((endfreq-startfreq)/sampleSize)))
-plt.plot(bandwidth, amplitudes, '-c')
-plt.show()
+ax.set_ylabel('Amplitudes')
+ax.set_xlabel('Frequencies (GHz)')
+
+ax.plot(bandwidth, amplitudes, '-y')
+fig.canvas.draw()
+fig.canvas.flush_events()
+# plt.show()
+
+while True:
+    try:
+        now = time.time()
+        startfreq, endfreq, sampleSize, amplitudes = request_antenna_data(fpga)
+        ax.plot(bandwidth, amplitudes, '-y')
+        fig.canvas.draw()
+        print('Updating data in {}s.'.format(time.time()-now))
+        fig.canvas.flush_events()
+    except KeyboardInterrupt:
+        print("Exiting...")
+        break
+        
