@@ -75,7 +75,7 @@ print("Data received in {} seconds".format(time.time()-now))
 
 ax.set_ylim(min(amplitudes), max(amplitudes))
 bandwidth = list(np.arange(start=startfreq, stop=endfreq, step=((endfreq-startfreq)/sampleSize)))
-ax.set_ylabel('Amplitudes')
+ax.set_ylabel('Amplitudes (dBm)')
 ax.set_xlabel('Frequencies (GHz)')
 
 ax.plot(bandwidth, amplitudes, '-y')
