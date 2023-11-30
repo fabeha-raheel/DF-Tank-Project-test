@@ -2,6 +2,10 @@ import time
 import serial
 import re
 
+# FPGA_PORT = 'COM7'            # port for Windows
+FPGA_PORT = '/dev/ttyUSB0'      # port for Linux / Ubuntu
+FPGA_BAUD = 115200
+
 startSequence = r"^11111111 >> ([0-9]*)$"
 stopSequence = r"^([0-9]*) >> ([0-9]*)$"
 
@@ -36,13 +40,22 @@ def request_antenna_data(device):
             break
 
 # Connect to the FPGA over UART
-fpga = serial.Serial(
-    port='COM7',
-    baudrate=115200,
+print("Connecting to FPGA...")
+try:
+    fpga = serial.Serial(
+    port=FPGA_PORT,
+    baudrate=FPGA_BAUD,
     parity=serial.PARITY_NONE,
     timeout = None
     )
-time.sleep(3)
+    time.sleep(1)
+except serial.SerialException:
+    print("Error connecting to port.")
+finally:
+    print("Connection successfully established.")
+    print()
 
-print("Sending data to FPGA...")
+now = time.time()
+print("Requesting data from FPGA...")
 request_antenna_data(fpga)
+print("Data received in {}s.".format(time.time()-now))
