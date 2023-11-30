@@ -53,7 +53,7 @@ class HolybroTransmitter():
                 decoded_bytes = bytes.decode('utf-8')
                 if decoded_bytes != "":
                     self.transmitter.write(bytes)
-                    if "*" in decoded_bytes:
+                    if "***" in decoded_bytes:
                         return
                 else:
                     continue
@@ -100,14 +100,15 @@ class HolybroReceiver():
 
         startSequence = r"11111111 >> ([0-9]*)"
         stopSequence = r"([0-9]*) >> ([0-9]*)"
-        datastream = ""
+        datastream = str("")
         amplitudes = []
 
         while True:
-            self.receiver.read(self.receiver.in_waiting)
+            bytes = self.receiver.read(self.receiver.in_waiting)
             decoded_bytes = bytes.decode('utf-8')
             if decoded_bytes != "":
-                datastream = datastream + decoded_bytes
+                datastream = str(datastream) + decoded_bytes
+                print(datastream)
                 if "*" in datastream:
                     break
             else:
