@@ -52,7 +52,7 @@ class HolybroTransmitter():
                 bytes = fpga.read(fpga.in_waiting)
                 decoded_bytes = bytes.decode('utf-8')
                 if decoded_bytes != "":
-                    self.transmitter.write(bytes)
+                    self.transmitter.write(decoded_bytes.encode())
                     if "***" in decoded_bytes:
                         return
                 else:
