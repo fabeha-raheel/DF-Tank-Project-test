@@ -4,6 +4,10 @@ import re
 import matplotlib.pyplot as plt 
 import numpy as np
 
+# FPGA_PORT = 'COM7'            # port for Windows
+FPGA_PORT = '/dev/ttyUSB0'      # port for Linux / Ubuntu
+FPGA_BAUD = 115200
+
 startSequence = r"^11111111 >> ([0-9]*)$"
 stopSequence = r"^([0-9]*) >> ([0-9]*)$"
 
@@ -41,8 +45,8 @@ def request_antenna_data(device):
 print("Connecting to FPGA...")
 try:
     fpga = serial.Serial(
-    port='COM7',
-    baudrate=115200,
+    port=FPGA_PORT,
+    baudrate=FPGA_BAUD,
     parity=serial.PARITY_NONE,
     timeout = None
     )
@@ -57,10 +61,10 @@ print("Requesting data from FPGA...")
 now = time.time()
 startfreq, endfreq, sampleSize, amplitudes = request_antenna_data(fpga)
 print("Data received in {} seconds".format(time.time()-now))
-# print(amplitudes)
-# print("Start Freq: ", startfreq)
-# print("Stop Freq: ", endfreq)
-# print("Sample Size: ", sampleSize)
+print("Amplitudes gotten: ", len(amplitudes))
+print("Start Freq: ", startfreq)
+print("Stop Freq: ", endfreq)
+print("Sample Size: ", sampleSize)
 
 # plt.ion() 
 # fig = plt.figure()

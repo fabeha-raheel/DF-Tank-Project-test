@@ -4,6 +4,10 @@ import re
 import matplotlib.pyplot as plt 
 import numpy as np
 
+# FPGA_PORT = 'COM7'            # port for Windows
+FPGA_PORT = '/dev/ttyUSB0'      # port for Linux / Ubuntu
+FPGA_BAUD = 115200
+
 startSequence = r"11111111 >> ([0-9]*)"
 stopSequence = r"([0-9]*) >> ([0-9]*)"
 
@@ -47,8 +51,8 @@ def request_antenna_data(device):
 print("Connecting to FPGA...")
 try:
     fpga = serial.Serial(
-    port='COM7',
-    baudrate=115200,
+    port=FPGA_PORT,
+    baudrate=FPGA_BAUD,
     parity=serial.PARITY_NONE,
     timeout = None
     )
