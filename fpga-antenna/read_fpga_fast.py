@@ -23,7 +23,7 @@ def request_antenna_data(device):
         device.write(command)
         
         while True:
-            bytes = fpga.read(fpga.in_waiting)
+            bytes = device.read(device.in_waiting)
             decoded_bytes = bytes.decode('utf-8')
             if decoded_bytes != "":
                 datastream = datastream + decoded_bytes
