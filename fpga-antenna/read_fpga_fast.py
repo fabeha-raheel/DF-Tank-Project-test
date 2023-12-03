@@ -59,7 +59,7 @@ try:
     time.sleep(1)
 except serial.SerialException:
     print("Error connecting to port.")
-finally:
+else:
     print("Connection successfully established.")
     print()
 

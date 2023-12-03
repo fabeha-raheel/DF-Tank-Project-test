@@ -129,3 +129,4 @@ class HolybroReceiver():
                     sampleSize = int(stopresult.groups()[0])
                 if "*" in line:
                     return startfreq, endfreq, sampleSize, amplitudes
+    
